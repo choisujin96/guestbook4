@@ -15,11 +15,11 @@ public class HelloController {
 	//메소드gs
 	
 	//메소드일반			
-	@RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.POST}) //대괄호는 두개일때만이고 하나일 땐 괄호 사용x
+	@RequestMapping(value="/hello", method={RequestMethod.GET, RequestMethod.POST}) //대괄호는 두개일때만이고 하나일 땐 괄호 사용x
 	public String select() {
-		System.out.println("guestbook4/list");
+		System.out.println("hello");
 		
-		return "";
+		return "/WEB-INF/views/hello.jsp";
 	}
 	
 	@RequestMapping(value="/remove", method= {RequestMethod.GET, RequestMethod.POST})
