@@ -2,22 +2,26 @@ package com.javaex.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.javaex.dao.GuestbookDAO;
+import com.javaex.service.GuestbookService;
 import com.javaex.vo.GuestbookVO;
 
 @Controller  //주소 조사하러 갈 때 @컨트롤러(어노테이션)가 있는 애들만 한다.
 public class GuestbookController {
 	
 	
-	//필드
+	//필드   
+	@Autowired //<--얘가 메모리에 올려주는 어노테이션  (*단 이걸 쓰러면 @Service 어노테이션을 쓰는 클래스가 있어야함 얘만 쫓아다기때문.)
+	private GuestbookService guestbookService;
+	       //얘를 메모리에 올리고, 얘를 주소에 올려라
+	
+	
 	
 	//생성자
 	
@@ -29,11 +33,18 @@ public class GuestbookController {
 	public String list(Model model) { //리턴문자열이 스트링이라 자료형이 Stirng이다.
 		System.out.println("guestbookController/list()");
 		
-		GuestbookDAO guestbookDAO = new GuestbookDAO();
-		List<GuestbookVO> guestbookList = guestbookDAO.guestbookSelect();
-		System.out.println(guestbookList);
+
+		//service
+		/*
+		GuestbookService guestbookService= new GuestbookService(); 이거 안쓸거임
+		GuestbookService 메모리에 올려주시요
+		주소0x333(guestbookList) 주입 해주세요
+		*/
 		
 		
+		List<GuestbookVO> guestbookList = guestbookService.exeGetGuestbookList();
+		
+
 		//*Model개념
 		//D.S(dispatcher servlet) 한테!!!! request의 attribute영역에 
 		//"gList" 이름으로 0x333(guestbookList)을 넣어줘
@@ -47,7 +58,7 @@ public class GuestbookController {
 		return "addlist";
 	}
 	
-
+	//방명록 글 저장
 	@RequestMapping(value="/add", method=  {RequestMethod.GET , RequestMethod.POST})
 	public String add(@ModelAttribute GuestbookVO guestbookVO) {
 	    		//add를 실행하는 건 D.S            
@@ -71,12 +82,14 @@ public class GuestbookController {
 		 *url 파라미터 이름과 VO의 필드 이름을 같게 만든다.
 		  
 		 */
-
-		System.out.println(guestbookVO);
-		GuestbookDAO guestbookDAO = new GuestbookDAO();
-		int count = guestbookDAO.guestbookInsert(guestbookVO);
-		System.out.println(count);
+		///////////////////////////////////////////////////////
 		
+		//GuestbookService guestbookService = new GuestbookService();
+		//얘도 필드에서 다 처리했기때문에 이거 안써도 됨.
+		
+		guestbookService.exeGuestbookAdd(guestbookVO);
+										 //주소를 넘겨준다.
+			
 		
 		//리다이렉트 하는 법 "redirect:" 앞쪽에 써준다
 		//http://localhost:8888/guestbook4/list
@@ -129,10 +142,12 @@ public class GuestbookController {
 	public String remove(@ModelAttribute GuestbookVO guestbookVO) {
 		System.out.println("GuestbookXontroller.remove()");
 
-		GuestbookDAO guestbookDAO = new GuestbookDAO();
-		int count = guestbookDAO.guestbookDelete(guestbookVO);
 		
+		//GuestbookService guestbookService = new GuestbookService();
+		//얘도 필드에서 다 처리했기때문에 이거 안써도 됨. 사용하면 또 만드는 거기 때문에 굳이임. 바보같은 짓!!
 		
+		guestbookService.exeGetGuestbookRemove(guestbookVO);
+
 		
 		return "redirect:/list";
 	}
