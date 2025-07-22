@@ -11,7 +11,7 @@
 	<groupId>com.javaex</groupId>
 	<artifactId>guestbook4</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>war</packaging>  <!-- 여기확인 -->
 	<name>guestbook4</name>
 	<description>guestbook4 project for Spring Boot</description>
 	<url/>
@@ -31,6 +31,8 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+	
+		<!-- 기본 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -42,6 +44,14 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- Tomcat을 provided로 설정 -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-tomcat</artifactId>
+		    <scope>provided</scope>
+		</dependency>
+		<!-- 기본 -->
 		
 		
 		<!--jsp servlet으로 변환-->
@@ -111,13 +121,16 @@
 		</dependency>
 	</dependencies>
 
+
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
+	    <finalName>ROOT</finalName>
+	    <plugins>
+	       <plugin>
+	           <groupId>org.springframework.boot</groupId>
+	           <artifactId>spring-boot-maven-plugin</artifactId>
+	       </plugin>
+	    </plugins>
 	</build>
+
 
 </project>
