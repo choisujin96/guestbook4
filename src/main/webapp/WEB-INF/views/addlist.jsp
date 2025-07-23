@@ -12,7 +12,8 @@
 	
 	
 	<body>
-		<form action="${pageContext.request.contextPath}/add" mthod="get">
+		v03
+		<form action="${pageContext.request.contextPath}/add" method="get">
 			<table border="1" width="540px">
 				<tr>
 					<td>이름</td>
